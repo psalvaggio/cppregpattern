@@ -219,7 +219,7 @@ inline superclass##Creator::superclass##Creator( \
   superclass##Registry::Register(class_name, this); \
 } \
 \
-superclass##Registry::map_t& superclass##Registry::ctors() { \
+inline superclass##Registry::map_t& superclass##Registry::ctors() { \
   static map_t table; \
   return table; \
 }
