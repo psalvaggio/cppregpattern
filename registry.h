@@ -51,9 +51,10 @@
 #ifndef REGISTRY_H
 #define REGISTRY_H
 
-#include <unordered_map>
-#include <string>
+#include <functional>
 #include <iostream>
+#include <string>
+#include <unordered_map>
 
 namespace registry {
 
