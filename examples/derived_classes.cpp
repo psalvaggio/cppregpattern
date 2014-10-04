@@ -1,9 +1,8 @@
-// A simple test and demonstration of the registry interface defined in
-// regristy.h
-//
+// Implementation file for derived_classes.h. No registry knowledge here.
 // Author: Philip Salvaggio
 
 #include "derived_classes.h"
+
 #include <iostream>
 
 using namespace std;
@@ -31,7 +30,6 @@ void Derived12::Print() const {
   cout << "Derived12: ";
   printer()->Print();
 }
-
 
 // 2-parameter constructor classes.
 Derived21::Derived21(const Base1* printer, int id) : Base2(printer, id) {}
