@@ -110,8 +110,7 @@ class Registry {
 
   template<typename ... Args>
   static T* Create(const std::string& class_name, Args && ... pack) {
-    static_assert(std::is_same<std::tuple<Args...>,
-                  std::tuple<Pack...>>::value,
+    static_assert(std::is_same<std::tuple<Args...>, std::tuple<Pack...>>::value,
                   "Registry constructor parameter mismatch");
     if (ctors().count(class_name) == 1) {
       return ctors()[class_name](std::forward<Args>(pack)...);
