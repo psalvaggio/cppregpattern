@@ -109,7 +109,6 @@ class Registry {
   using map_t = std::unordered_map<std::string, ctor_t>;
 
   template<typename ... Args>
-  //static T* Create(const std::string& class_name, Pack && ... pack) {
   static T* Create(const std::string& class_name, Args && ... pack) {
     static_assert(std::is_same<std::tuple<Args...>,
                   std::tuple<Pack...>>::value,
