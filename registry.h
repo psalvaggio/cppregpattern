@@ -123,6 +123,10 @@ class Registry {
     return true;
   }
 
+  static bool IsRegistered(const std::string& class_name) {
+    return ctors().count(class_name) == 1;
+  }
+
   static void Unregister(const std::string& class_name) {
     ctors().erase(class_name);
   }
