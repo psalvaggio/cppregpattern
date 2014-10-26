@@ -108,9 +108,11 @@ class Registry {
   using ctor_t = std::function<T*(Pack...)>;
   using map_t = std::unordered_map<std::string, ctor_t>;
 
-  static T* Create(const std::string& class_name, Pack && ... pack) {
+  template<typename ... Args>
+  //static T* Create(const std::string& class_name, Pack && ... pack) {
+  static T* Create(const std::string& class_name, Args && ... pack) {
     if (ctors().count(class_name) == 1) {
-      return ctors()[class_name](std::forward<Pack>(pack)...);
+      return ctors()[class_name](std::forward<Args>(pack)...);
     }
     std::cerr << "Class " << class_name << " not registered." << std::endl;
     return nullptr;
