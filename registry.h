@@ -13,7 +13,7 @@
 //  public:
 //   explicit Base(std::ostream& os) : os_(os) {}
 //   virtual void Print() = 0;
-//  protexted:
+//  protected:
 //   std::ostream& os_;
 // };
 // 
