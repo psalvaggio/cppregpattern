@@ -17,7 +17,7 @@
 //   std::ostream& os_;
 // };
 // 
-// Then, derived subclasses should call the REGISTER1_SUBCLASS macro after their
+// Then, derived subclasses should call the REGISTER_SUBCLASS1 macro after their
 // class definition. For example:
 //
 // class Derived1 : public Base {
@@ -25,7 +25,7 @@
 //   explicit Derived1(std::ostream& os) : Base(os) {}
 //   virtual void Print() { os << "Derived1" << std::endl; }
 // };
-// REGISTER1_SUBCLASS(Derived1, Base, std::ostream&)
+// REGISTER_SUBCLASS1(Derived1, Base, std::ostream&)
 //
 // Then, when an instance of one of the subclasses is desired, it can be
 // constructed as:
