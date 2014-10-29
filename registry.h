@@ -13,7 +13,7 @@
 //  public:
 //   explicit Base(std::ostream& os) : os_(os) {}
 //   virtual void Print() = 0;
-//  private:
+//  protexted:
 //   std::ostream& os_;
 // };
 // 
@@ -23,7 +23,7 @@
 // class Derived1 : public Base {
 //  public:
 //   explicit Derived1(std::ostream& os) : Base(os) {}
-//   virtual void Print() { os << "Derived1" << std::endl; }
+//   virtual void Print() { os_ << "Derived1" << std::endl; }
 // };
 // REGISTER_SUBCLASS1(Derived1, Base, std::ostream&)
 //
