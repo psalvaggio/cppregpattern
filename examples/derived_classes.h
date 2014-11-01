@@ -35,7 +35,7 @@ class Derived11 : public Base1 {
 
   virtual void Print() const;
 };
-REGISTER_SUBCLASS1(Base1, Derived11, Base0*)
+REGISTER_SUBCLASS(Base1, Derived11, Base0*)
 
 class Derived12 : public Base1 {
  public:
@@ -44,7 +44,7 @@ class Derived12 : public Base1 {
 
   virtual void Print() const;
 };
-REGISTER_SUBCLASS1(Base1, Derived12, Base0*)
+REGISTER_SUBCLASS(Base1, Derived12, Base0*)
 
 // Derived classes of Base2, both with matching constructors.
 class Derived21 : public Base2 {
@@ -54,7 +54,7 @@ class Derived21 : public Base2 {
 
   virtual void Print() const;
 };
-REGISTER_SUBCLASS2(Base2, Derived21, Base1*, int)
+REGISTER_SUBCLASS(Base2, Derived21, Base1*, int)
 
 class Derived22 : public Base2 {
  public:
@@ -63,6 +63,6 @@ class Derived22 : public Base2 {
 
   virtual void Print() const;
 };
-REGISTER_SUBCLASS2(Base2, Derived22, Base1*, int)
+REGISTER_SUBCLASS_W_IDENTIFIER(Base2, Derived22, Foo, Base1*, int)
 
 #endif  // DERIVED_CLASSES_H

@@ -34,7 +34,7 @@ int main() {
   unique_ptr<Base2> d21(
       Registry<Base2, Base1*, int>::Create("Derived21", d11.get(), 1000));
   unique_ptr<Base2> d22(
-      Registry<Base2, Base1*, int>::Create("Derived22", d12.get(), 1001));
+      Registry<Base2, Base1*, int>::Create("Foo", d12.get(), 1001));
 
   d01->Print();
   d02->Print();
