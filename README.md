@@ -1,6 +1,6 @@
 # C++ Registry Pattern
 
-An implementation of the Registry pattern, which allows derived classes of a common super class to be constructed by their string class name. All subclasses must share a common constructor in order to be constructed by this implementation of the registry pattern.
+An implementation of the Registry pattern, which allows derived classes of a common base class to be constructed by their string class name or custom string identifier. All derived classes must share a common constructor in order to be constructed by this implementation of the registry pattern.
 
 This library defines a class template
 
@@ -8,13 +8,13 @@ This library defines a class template
 Registry<Base, Args...>
 ```
 
-where Base is the base class of the inheritance tree and Args are the parameters of the common constructor. It is recommended to use a template alias for code readability. For instance, if the shared constructor takes an int and a string const reference,
+where `Base` is the base class of the inheritance tree and `Args` are the parameters of the common constructor. It is recommended to use a template alias for code readability. For instance, if the shared constructor takes an int and a string const reference,
 
 ```c++
 using BaseFactory = Registry<Base, int, const std::string&>;
 ```
 
-In order to register a subclass, a number of macros have been defined in registry.h. If the string class name is to be used for constructing the class, the use,
+In order to register a subclass, a number of macros have been defined in `registry.h`. If the string class name is to be used for constructing the class, the use,
 
 ```c++
 class Derived : public Base {
@@ -31,7 +31,7 @@ If a custom identifier is going to be used to construct the subclass, instead us
 REGISTER_SUBCLASS_W_IDENTIFIER(Base, Derived, Identifier, int, const std::string&)
 ```
 
-To then create objects using the Registry class, simply call the Create function with the class name/identifier and the constructor parameters.
+To then create objects using the `Registry` class, simply call the `Create()` function with the class name/identifier and the constructor parameters.
 
 ```c++
 using BaseFactory = Registry<Base, int, const std::string&>;
