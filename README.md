@@ -1,53 +1,53 @@
 # C++ Registry Pattern
 
-An implementation of the Registry pattern, which allows derived classes of a common base class to be constructed by their string class name or custom string identifier. All derived classes must share a common constructor in order to be constructed by this implementation of the registry pattern.
+A self-registering map of functions, allowing for dynamic dispatching based
+on some identifier. Example usages may be constructing a subclass or using
+an appropriate I/O function based on an enum value or a string key. All
+functions in the map need to have the same signature in this implementation.
+Multiple threads can read from the map using Dispatch() at the same time,
+but do not call Register() and Dispatch() from different threads as the
+same time.
 
-This library defines a class template
-
+Since the Registry template instantiation can be quite verbose and
+registration is a bit of boilerplate, it is recommended that users create
+a type alias and a macro for registration. For example:
 ```c++
-Registry<Base, Args...>
+using BaseRegistry = Registry<std::string,
+                              std::unique_ptr<Base>(int, double)>;
+#define REGISTER_BASE_SUBCLASS(subclass)                         \
+    static bool _registered_##subclass = BaseRegistry::Register( \
+        #subclass, [](int a, double b) {                         \
+            return std::unique_ptr<Base>(new subclass(a, b));    \
+        });
 ```
 
-where `Base` is the base class of the inheritance tree and `Args` are the parameters of the common constructor. It is recommended to use a template alias for code readability. For instance, if the shared constructor takes an int and a string const reference,
+The following policies for missing keys are supported:
+1. `MissingKeyPolicy::exception` - throws the `std::out_of_range` from
+   `unordered_map`'s `at()` when the key does not exist.
+2. `MissingKeyPolicy::default_construct` - returns a default-constructed
+   object when the key does not exist.
+3. `MissingKeyPolicy::optional` - `Dispatch` now returns a `std::optional`
+   of `Func`'s return type. This is only supported when C++17 is enabled.
 
-```c++
-using BaseFactory = Registry<Base, int, const std::string&>;
-```
-
-In order to register a subclass, a number of macros have been defined in `registry.h`. If the string class name is to be used for constructing the class, the use,
-
-```c++
-class Derived : public Base {
- public:
-  Derived(int id, const std::string& name);
-...
-};
-REGISTER_SUBCLASS(Base, Derived, int, const std::string&) 
-```
-
-If a custom identifier is going to be used to construct the subclass, instead use
-
-```c++
-REGISTER_SUBCLASS_W_IDENTIFIER(Base, Derived, Identifier, int, const std::string&)
-```
-
-To then create objects using the `Registry` class, simply call the `Create()` function with the class name/identifier and the constructor parameters.
-
-```c++
-using BaseFactory = Registry<Base, int, const std::string&>;
-std::unique_ptr<Base> obj(BaseFactory::Create("Identifier", 0, "foo"));
-```
-
-*IMPORTANT*: This scheme works as is when all of the classes to be constructed are linked directly to the executable. However, if they are in an external library, the linker must be forced to load all of the symbols in that library. On Linux, this is done with the flags
-
+*NOTE:* If the registration is taking place in a STATIC library linked to the
+executable, then all of the headers with the registrations must be included
+or the library must be linked with with the platform-specific whole library
+flags, such as
 ```
 -Wl,--whole-archive -lmylib -Wl,--no-whole-archive
 ```
-
 on Max OS X, this is done with the flags
-
 ```
 -Wl,-force_load -lmylib
 ```
 
+## Template Parameters
+- `Key` - The identifier type for the function map
+- `Func`- The function signature type for the function map
+- `MKP` - The behavior policy for what to do in the case of a missing key
+- `Hash` - The hash function to use for the function map
+- `KeyEqual` - The key equality function for the function map
+- `Allocator` - The allocator to use for the function map
+
+## Examples
 See the examples directory for an example with CMake.
