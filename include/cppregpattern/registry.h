@@ -1,7 +1,7 @@
 /** Interface file for the Registry class template
  *
  *  \file registry.h
- *  \author Dr. Philip Salvaggio (philip.salvaggio@eagleview.com)
+ *  \author Dr. Philip Salvaggio (salvaggio.philip@gmail.com)
  *  \date 01 Sep 2020
  */
 
